@@ -17,10 +17,17 @@ router.post('/', async (req, res) => {
     res.redirect('/posts');
 });
 
+
+router.get('/view/:id', async (req, res) => {
+    let post = await db.Post.findByPk(req.params.id);
+    res.render('posts/view.njk', {post});
+});
+
 router.get('/edit/:id', async (req, res) => {
     let post = await db.Post.findByPk(req.params.id);
     res.render('posts/edit.njk', {post});
 });
+
 router.post('/edit/:id', async (req, res) => {
     await db.Post.update({
         title: req.body.title,
